@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: games
+  namespace: techchallenge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: games
+  template:
+    metadata:
+      labels:
+        app: games
+    spec:
+      containers:
+      - name: games
+        image: techchallenge-games:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: ConnectionStrings__DefaultConnection
+          valueFrom:
+            secretKeyRef:
+              name: db-secrets
+              key: GAMES_DB
+        - name: RabbitMQ__Host
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: RABBITMQ_HOST
+        - name: USERS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: USERS_URL
+        - name: PAYMENTS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: PAYMENTS_URL
+        - name: ElasticSearch__Url
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: ELASTICSEARCH_URL
