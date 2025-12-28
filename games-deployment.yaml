@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: games
-        image: techchallenge-games:latest
+        image: alqueiroz/games:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80

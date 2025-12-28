@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: payments
-        image: techchallenge-payments:latest
+        image: alqueiroz/payments:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
